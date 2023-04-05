@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t klaudio/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true klaudio/react-test npm test
+
+after_success:
+  - docker build -t klaudio/multi-client ./client
+  - docker build -t klaudio/multi-nginx ./nginx
+  - docker build -t klaudio/multi-server ./server
+  - docker build -t klaudio/multi-worker ./worker
