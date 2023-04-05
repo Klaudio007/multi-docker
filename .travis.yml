@@ -13,3 +13,11 @@ after_success:
   - docker build -t klaudio/multi-nginx ./nginx
   - docker build -t klaudio/multi-server ./server
   - docker build -t klaudio/multi-worker ./worker
+
+#Log in to docker CLI
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-s
+#Take those images and push them to docker hub
+- docker push klaudio/multi-client
+- docker push klaudio/multi-mgimx
+- docker push klaudio/multi-server
+- docker push klaudio/multi-worker
